@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -18,7 +18,17 @@ function ChangeView({ center }) {
     return null;
 }
 
-const Map = ({ center, markers }) => {
+// Component to handle map clicks
+function LocationMarker({ onMapClick }) {
+    useMapEvents({
+        click(e) {
+            if (onMapClick) onMapClick(e.latlng);
+        },
+    });
+    return null;
+}
+
+const Map = ({ center, markers, onMapClick, destination }) => {
     return (
         <MapContainer center={center} zoom={13} scrollWheelZoom={true} className="h-full w-full rounded-lg z-0">
             <ChangeView center={center} />
@@ -26,20 +36,24 @@ const Map = ({ center, markers }) => {
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
+            <LocationMarker onMapClick={onMapClick} />
 
             {/* User Location */}
             <Marker position={center}>
-                <Popup>
-                    You are here
-                </Popup>
+                <Popup>Pickup Location</Popup>
             </Marker>
+
+            {/* Destination Marker */}
+            {destination && (
+                <Marker position={destination}>
+                    <Popup>Destination</Popup>
+                </Marker>
+            )}
 
             {/* Driver Markers */}
             {markers && markers.map((marker, idx) => (
                 <Marker key={idx} position={[marker.lat, marker.lon]}>
-                    <Popup>
-                        Driver: {marker.id}
-                    </Popup>
+                    <Popup>Driver: {marker.id}</Popup>
                 </Marker>
             ))}
         </MapContainer>

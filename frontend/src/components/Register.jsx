@@ -17,6 +17,7 @@ const Register = () => {
         try {
             const res = await register(formData);
             localStorage.setItem('token', res.data.token);
+            localStorage.setItem('userId', res.data.userId); // Save User ID
             alert('Registration Successful');
             navigate('/login');
         } catch (err) {

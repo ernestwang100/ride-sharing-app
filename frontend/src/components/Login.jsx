@@ -15,6 +15,7 @@ const Login = () => {
         try {
             const res = await login(formData);
             localStorage.setItem('token', res.data.token);
+            localStorage.setItem('userId', res.data.userId); // Save User ID
             if (res.data.role === 'DRIVER') {
                 navigate('/driver-dashboard');
             } else {

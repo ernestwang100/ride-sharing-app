@@ -8,7 +8,7 @@ import DriverDashboard from './pages/DriverDashboard';
 function App() {
   return (
     <Router>
-      <div className="w-full">
+      <div className="w-full min-h-screen bg-gray-100">
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Lock } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { login } from '../services/api';
 
 const Login = () => {
@@ -57,7 +57,7 @@ const Login = () => {
                 </button>
 
                 <p className="text-center text-gray-500 text-sm">
-                    Don't have an account? <span className="text-accent cursor-pointer hover:underline">Sign Up</span>
+                    Don't have an account? <Link to="/register" className="text-accent cursor-pointer hover:underline">Sign Up</Link>
                 </p>
             </form>
         </div>

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Mail, Lock, User, Car } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
+import { Mail, Lock, User } from 'lucide-react';
 import { register } from '../services/api';
 
 const Register = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -16,6 +18,7 @@ const Register = () => {
             const res = await register(formData);
             localStorage.setItem('token', res.data.token);
             alert('Registration Successful');
+            navigate('/login');
         } catch (err) {
             alert('Registration Failed');
         }
@@ -79,6 +82,10 @@ const Register = () => {
                 <button className="w-full bg-primary text-white py-4 rounded-lg font-bold hover:bg-secondary transition-all shadow-lg transform hover:-translate-y-1">
                     Sign Up
                 </button>
+
+                <p className="text-center text-gray-500 text-sm">
+                    Already have an account? <Link to="/login" className="text-accent cursor-pointer hover:underline">Login</Link>
+                </p>
             </form>
         </div>
     );
